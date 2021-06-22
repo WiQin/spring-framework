@@ -173,6 +173,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 */
 	public AbstractAutowireCapableBeanFactory() {
 		super();
+		//忽略给定接口的自动装配功能，具体作用看该方法注释
 		ignoreDependencyInterface(BeanNameAware.class);
 		ignoreDependencyInterface(BeanFactoryAware.class);
 		ignoreDependencyInterface(BeanClassLoaderAware.class);
@@ -266,6 +267,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	/**
+	 * TODO
+	 * 自动装配时忽略给定的依赖接口，典型应用是通过其他方式解析 Application上下文
+	 * 注册依赖，类似于 BeanFactory通过BeanFactoryAware进行注入或者ApplicationContext通过
+	 * ApplicationContextAwar进行注入
 	 * Ignore the given dependency interface for autowiring.
 	 * <p>This will typically be used by application contexts to register
 	 * dependencies that are resolved in other ways, like BeanFactory through

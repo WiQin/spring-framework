@@ -27,6 +27,14 @@ import java.nio.channels.ReadableByteChannel;
 import org.springframework.lang.Nullable;
 
 /**
+ * 抽象了所有 Spring 内部使用到的底层资源： File URL Classpath等
+ * 不同来源资源文件都有对应的Resource实现
+ * 文件（ FileSystemResource
+ * Classpath资源（ ClassPathResource ）、
+ * URL资源（ Ur!Resource ）、
+ * InputStream 资源（ InputStreamResource）
+ * Byte数组（ ByteArrayResource ）等
+ * 具体看各自实现
  * Interface for a resource descriptor that abstracts from the actual
  * type of underlying resource, such as a file or class path resource.
  *
@@ -52,6 +60,7 @@ import org.springframework.lang.Nullable;
 public interface Resource extends InputStreamSource {
 
 	/**
+	 * 判断当前资源是否存在
 	 * Determine whether this resource actually exists in physical form.
 	 * <p>This method performs a definitive existence check, whereas the
 	 * existence of a {@code Resource} handle only guarantees a valid
@@ -60,6 +69,7 @@ public interface Resource extends InputStreamSource {
 	boolean exists();
 
 	/**
+	 * 判断当前资源是否可读
 	 * Indicate whether non-empty contents of this resource can be read via
 	 * {@link #getInputStream()}.
 	 * <p>Will be {@code true} for typical resource descriptors that exist
@@ -75,6 +85,7 @@ public interface Resource extends InputStreamSource {
 	}
 
 	/**
+	 * 判断当前资源是否处于打开状态
 	 * Indicate whether this resource represents a handle with an open stream.
 	 * If {@code true}, the InputStream cannot be read multiple times,
 	 * and must be read and closed to avoid resource leaks.
@@ -150,6 +161,7 @@ public interface Resource extends InputStreamSource {
 	long lastModified() throws IOException;
 
 	/**
+	 * 基于当前资源创建一个相对资源
 	 * Create a resource relative to this resource.
 	 * @param relativePath the relative path (relative to this resource)
 	 * @return the resource handle for the relative resource

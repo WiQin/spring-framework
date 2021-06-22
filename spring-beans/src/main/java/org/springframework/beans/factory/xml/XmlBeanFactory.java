@@ -53,7 +53,7 @@ import org.springframework.core.io.Resource;
 @Deprecated
 @SuppressWarnings({"serial", "all"})
 public class XmlBeanFactory extends DefaultListableBeanFactory {
-
+	//自定义的xml读取器，可实现个性化的BeanDefinitionReader读取（读取xml配置文件）
 	private final XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(this);
 
 
@@ -64,6 +64,7 @@ public class XmlBeanFactory extends DefaultListableBeanFactory {
 	 * @throws BeansException in case of loading or parsing errors
 	 */
 	public XmlBeanFactory(Resource resource) throws BeansException {
+		//调用内部构造器
 		this(resource, null);
 	}
 
@@ -75,7 +76,9 @@ public class XmlBeanFactory extends DefaultListableBeanFactory {
 	 * @throws BeansException in case of loading or parsing errors
 	 */
 	public XmlBeanFactory(Resource resource, BeanFactory parentBeanFactory) throws BeansException {
+		//调用父类构造函数初始化
 		super(parentBeanFactory);
+		//资源加载的具体实现，通过XmIBeanDefinitionReader.loadBeanDefinitions()来加载数据
 		this.reader.loadBeanDefinitions(resource);
 	}
 
