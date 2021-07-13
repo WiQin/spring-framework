@@ -263,6 +263,14 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * if none specified.
 	 * EntityResolver解释: 如果SAX应用程序需要为外部实体实现自定义处理，则它必须实现此接口并使用setEntityResolver()方法向 SAX 驱动程序注册一个实例 （翻译自EntityResolver注释）
 	 * 就一个方法：resolveEntity(String publicId, String systemId)，返回inputSource对象
+	 * Spring使用DelegatingEntityResolver为EntityResolver实现类
+	 * DTD模式：
+	 *    publicId:-//Spring/JOTO BEAN 2.0//EN
+	 *    publicId:http://www.springframework.org/dtd/Spring-beans-2.0.dtd
+	 * xsd模式：
+	 * 	  publicId:null
+	 * 	  systemId:http://www.springframework.org/schema/beans/spring-beans.xsd
+	 *
 	 *
 	 */
 	protected EntityResolver getEntityResolver() {
