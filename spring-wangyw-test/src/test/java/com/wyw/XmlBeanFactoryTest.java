@@ -6,7 +6,7 @@ import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * @Descroption:XmlBeanFactory测试类
+ * @Descroption: XmlBeanFactory测试类
  * 该类在企业级应用中已经不再使用，转用ApplicationContext
  * 仅作学习用
  * @Author: wangyw

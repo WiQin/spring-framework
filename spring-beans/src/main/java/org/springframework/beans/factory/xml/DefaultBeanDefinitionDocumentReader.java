@@ -93,6 +93,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	@Override
 	public void registerBeanDefinitions(Document doc, XmlReaderContext readerContext) {
 		this.readerContext = readerContext;
+		//最后一步了
 		doRegisterBeanDefinitions(doc.getDocumentElement());
 	}
 
@@ -129,6 +130,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		this.delegate = createDelegate(getReaderContext(), root, parent);
 
 		if (this.delegate.isDefaultNamespace(root)) {
+			//处理profile属性
 			String profileSpec = root.getAttribute(PROFILE_ATTRIBUTE);
 			if (StringUtils.hasText(profileSpec)) {
 				String[] specifiedProfiles = StringUtils.tokenizeToStringArray(
@@ -145,8 +147,11 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 			}
 		}
 
+		//解析前处理，留给子类实现（模板方法模式）
 		preProcessXml(root);
+		//读取xml
 		parseBeanDefinitions(root, this.delegate);
+		//解析后处理，留给子类实现（模板方法模式）
 		postProcessXml(root);
 
 		this.delegate = parent;
@@ -166,16 +171,20 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 * @param root the DOM root element of the document
 	 */
 	protected void parseBeanDefinitions(Element root, BeanDefinitionParserDelegate delegate) {
+		//对beans处理
 		if (delegate.isDefaultNamespace(root)) {
 			NodeList nl = root.getChildNodes();
 			for (int i = 0; i < nl.getLength(); i++) {
 				Node node = nl.item(i);
 				if (node instanceof Element) {
 					Element ele = (Element) node;
+					//判断是否为默认命名空间  getNamespaceURI(node) 与 spring固定命名空间进行对比
 					if (delegate.isDefaultNamespace(ele)) {
+						//解析默认命名空间
 						parseDefaultElement(ele, delegate);
 					}
 					else {
+						//解析自定义命名空间
 						delegate.parseCustomElement(ele);
 					}
 				}
