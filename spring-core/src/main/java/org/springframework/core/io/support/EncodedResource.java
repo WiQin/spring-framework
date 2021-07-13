@@ -29,11 +29,13 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 /**
+ * 对资源文件编码进行处理
  * Holder that combines a {@link Resource} descriptor with a specific encoding
  * or {@code Charset} to be used for reading from the resource.
  *
  * <p>Used as an argument for operations that support reading content with
  * a specific encoding, typically via a {@code java.io.Reader}.
+ * 用作支持使用特定编码读取内容的操作的参数，通常通过 java.io.Reader  getReader()
  *
  * @author Juergen Hoeller
  * @author Sam Brannen
@@ -129,6 +131,7 @@ public class EncodedResource implements InputStreamSource {
 
 	/**
 	 * 处理资源文件编码
+	 * 当设置了编码属性时Spring会使用相应的编码作为输入流的编码
 	 * Open a {@code java.io.Reader} for the specified resource, using the specified
 	 * {@link #getCharset() Charset} or {@linkplain #getEncoding() encoding}
 	 * (if any).
