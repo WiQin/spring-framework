@@ -59,6 +59,7 @@ import org.springframework.util.StringUtils;
 public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccessor
 		implements BeanDefinition, Cloneable {
 
+	//一些静态变量和final常量
 	/**
 	 * Constant for the default scope name: {@code ""}, equivalent to singleton
 	 * status unless overridden from a parent bean definition (if applicable).
@@ -141,65 +142,91 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private volatile Object beanClass;
 
+	//bean的作用范围,对应bean属性scope
 	@Nullable
 	private String scope = SCOPE_DEFAULT;
 
+	//是否是抽象,对应bean属性abstract
 	private boolean abstractFlag = false;
 
+	//是否延迟加载,对应bean属性lazy-init
 	@Nullable
 	private Boolean lazyInit;
 
+	//自动注入模式，对应bean属性autowire
 	private int autowireMode = AUTOWIRE_NO;
 
+	//依赖检查  spring3.0后弃用
 	private int dependencyCheck = DEPENDENCY_CHECK_NONE;
 
+	//用来表示一个bean的实例化依靠另一个bean先实例化，对应bean属性depend-on
 	@Nullable
 	private String[] dependsOn;
 
+	//autowire-candidate属性设置为false,这样容器在查找自动装配对象时,将不考虑bena,
+	//即它不会被考虑作为其他bean自动装配的候选者,但是该bean本身还是可以使用自动装配来注入其他bean的
+	//对应bean属性autowire-candidate
 	private boolean autowireCandidate = true;
 
+	//自动装配时当出现多个bean候选者时，将作为首选者,对应bean属性primary
 	private boolean primary = false;
 
+	//用于记录qualifiers,对应子元素qualifier
 	private final Map<String, AutowireCandidateQualifier> qualifiers = new LinkedHashMap<>();
 
 	@Nullable
 	private Supplier<?> instanceSupplier;
 
+	//允许访问非公开的构造器和方法,程序设置
 	private boolean nonPublicAccessAllowed = true;
 
+	//是否以一种宽松的模式解析构造函数，默认为true
 	private boolean lenientConstructorResolution = true;
 
+	//对应factory-bean
 	@Nullable
 	private String factoryBeanName;
 
+	//对应factory-method
 	@Nullable
 	private String factoryMethodName;
 
+	//记录构造函数注入属性,对应bean属性constructor-arg
 	@Nullable
 	private ConstructorArgumentValues constructorArgumentValues;
 
+	//普通属性集合
 	@Nullable
 	private MutablePropertyValues propertyValues;
 
+	//方法重写的持有者,记录lookup-method,replaced-method属性
 	private MethodOverrides methodOverrides = new MethodOverrides();
 
+	//初始化方法,对应bean属性init-method
 	@Nullable
 	private String initMethodName;
 
+	//销毁方法,对应bean属性destroy-method
 	@Nullable
 	private String destroyMethodName;
 
+	//是否执行init-method,程序设置
 	private boolean enforceInitMethod = true;
 
+	//是否执行destroy-method,程序设置
 	private boolean enforceDestroyMethod = true;
 
+	//是否是用户定义的而不是应用程序本身定义的,创建AOP时为true,程序设置
 	private boolean synthetic = false;
 
+	//创建这个bean的应用,APPLICATION：用户 INFRASTRUCTURE：完全内部使用,与用户无关  SUPPORT：某些复杂配置的一部分
 	private int role = BeanDefinition.ROLE_APPLICATION;
 
+	//bean的描述信息
 	@Nullable
 	private String description;
 
+	//bean定义的资源
 	@Nullable
 	private Resource resource;
 
@@ -506,6 +533,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
+	 * 是否单例
 	 * Return whether this a <b>Singleton</b>, with a single shared instance
 	 * returned from all calls.
 	 * @see #SCOPE_SINGLETON
@@ -516,6 +544,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
+	 * 是否是原型
 	 * Return whether this a <b>Prototype</b>, with an independent instance
 	 * returned for each call.
 	 * @see #SCOPE_PROTOTYPE
@@ -536,6 +565,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
+	 * 是否是抽象
 	 * Return whether this bean is "abstract", i.e. not meant to be instantiated
 	 * itself but rather just serving as parent for concrete child bean definitions.
 	 */
