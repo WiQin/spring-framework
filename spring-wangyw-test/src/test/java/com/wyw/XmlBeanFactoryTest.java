@@ -1,8 +1,11 @@
 package com.wyw;
 
 import com.wyw.entity.User;
+import com.wyw.test.bean.Customer;
 import org.junit.Test;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -21,5 +24,13 @@ public class XmlBeanFactoryTest {
 		////这里是根据bean属性的id查对应的bean信息的
 		User user = (User) xmlBeanFactory.getBean("user");
 		System.out.println(user.getId()+":"+user.getName());
+	}
+
+	@Test
+	public void testCustom() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:custom-tag.xml");
+		Customer customer = (Customer) context.getBean("customer");
+		System.out.println(customer.getId()+":"+customer.getName());
+
 	}
 }
