@@ -19,6 +19,17 @@ package org.springframework.beans.factory;
 import org.springframework.lang.Nullable;
 
 /**
+ * 工厂bean，可以生成某个类型的bean实例,通过实现该接口可以自定义Bean的创建过程
+ * 学习链接：
+ * https://zhuanlan.zhihu.com/p/97005407
+ * https://blog.csdn.net/zknxx/article/details/79572387
+ *
+ * 写了一个测试类，去看看吧(com.wyw.XmlBeanFactoryTest#testFactoryBean()) (哈哈,套娃！惊不惊喜)
+ *
+ * 一般情况下，Spring通过反射机制利用bean的class属性指定实现类来实例化bean 。
+ * 在某些情况下，实例化bean过程比较复杂，如果按照传统的方式，则需要在<bean>中提供大量的配置信息，配置方式的灵活性是受限的，这时采用编码的方式可能会得到一个简单的方案。
+ * Spring为此提供了一个org.Springframework.bean.factory.FactoryBean的工厂类接口，用户可以通过实现该接口定制实例化bean的逻辑
+ *
  * Interface to be implemented by objects used within a {@link BeanFactory} which
  * are themselves factories for individual objects. If a bean implements this
  * interface, it is used as a factory for an object to expose, not directly as a
@@ -76,6 +87,8 @@ public interface FactoryBean<T> {
 
 
 	/**
+	 * 返回由FactoryBean创建的bean实例，如果isSingleton()返回true，则该实例会放到Spring容器中单实例缓存池中
+	 *
 	 * Return an instance (possibly shared or independent) of the object
 	 * managed by this factory.
 	 * <p>As with a {@link BeanFactory}, this allows support for both the
@@ -96,6 +109,8 @@ public interface FactoryBean<T> {
 	T getObject() throws Exception;
 
 	/**
+	 * 返回FactoryBean创建的bean类型
+	 *
 	 * Return the type of object that this FactoryBean creates,
 	 * or {@code null} if not known in advance.
 	 * <p>This allows one to check for specific types of beans without
@@ -118,6 +133,8 @@ public interface FactoryBean<T> {
 	Class<?> getObjectType();
 
 	/**
+	 * 返回由FactoryBean创建的bean实例的作用域是singleton还是prototype
+	 *
 	 * Is the object managed by this factory a singleton? That is,
 	 * will {@link #getObject()} always return the same object
 	 * (a reference that can be cached)?

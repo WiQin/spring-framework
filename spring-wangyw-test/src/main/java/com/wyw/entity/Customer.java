@@ -1,9 +1,9 @@
-package com.wyw.test.bean;
+package com.wyw.entity;
 
 import org.springframework.stereotype.Component;
 
 /**
- * 基础实体类（用户信息）
+ * 自定义标签实体类
  *
  * @author wyw
  * @date 2021/03/24

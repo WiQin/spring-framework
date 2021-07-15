@@ -1,7 +1,7 @@
 package com.wyw.customtag;
 
 
-import com.wyw.test.bean.Customer;
+import com.wyw.entity.Customer;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.util.StringUtils;

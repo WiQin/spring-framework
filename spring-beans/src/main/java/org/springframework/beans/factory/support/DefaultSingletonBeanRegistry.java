@@ -162,6 +162,13 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		}
 	}
 
+	/**
+	 * 单例在spring容器中只创建一次,后续再获取bean,就直接从单例缓存中获取
+	 * 这里只是尝试加载,首先尝试从缓存中加载,如果加载不成功则再次尝试从singletonFactories中加载.
+	 * 在创建单例bean的时候需要解决循环依赖的情况
+	 * @param beanName the name of the bean to look for
+	 * @return
+	 */
 	@Override
 	@Nullable
 	public Object getSingleton(String beanName) {

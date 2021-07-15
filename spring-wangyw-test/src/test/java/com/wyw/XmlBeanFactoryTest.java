@@ -1,7 +1,7 @@
 package com.wyw;
 
 import com.wyw.entity.User;
-import com.wyw.test.bean.Customer;
+import com.wyw.entity.Customer;
 import org.junit.Test;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -28,9 +28,24 @@ public class XmlBeanFactoryTest {
 
 	@Test
 	public void testCustom() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:custom-tag.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("custom-tag.xml");
 		Customer customer = (Customer) context.getBean("customer");
 		System.out.println(customer.getId()+":"+customer.getName());
 
+	}
+
+	//ps:你是从FactoryBean源码看过来的吗,不是的话过去看看,有惊喜
+	@Test
+	public void testFactoryBean() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		//这里返回User
+		// spring通过反射机制发现实现了FactoryBean接口,此时Spring容器调用FactoryBean.getObject返回
+		Object userFactoryBean = context.getBean("userFactoryBean");
+		System.out.println(userFactoryBean.toString());
+		//这里返回FactoryBean
+		//FactoryBean是我的生产工厂,要获取,得加钱(&)
+		Object factoryBean = context.getBean("&userFactoryBean");
+		System.out.println(factoryBean.toString());
+		//怎么实现的？ emmm...还没看
 	}
 }

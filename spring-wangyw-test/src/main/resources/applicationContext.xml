@@ -8,4 +8,9 @@
 		<property name="name" value="Bruis"/>
 	</bean>
 
+	<bean id="userFactoryBean" class="com.wyw.factorybean.UserFactoryBean">
+		<property name="userStr" value="2,userFactoryBean"/>
+	</bean>
+
+
 </beans>
