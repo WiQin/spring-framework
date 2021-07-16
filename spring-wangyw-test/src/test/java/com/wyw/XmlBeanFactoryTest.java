@@ -16,6 +16,9 @@ import org.springframework.core.io.ClassPathResource;
  * @Date: 2021/6/22 16:31
  */
 public class XmlBeanFactoryTest {
+	/**
+	 * Spring容器加载过程
+	 */
 	@Test
 	public void test() {
 		//1.通过ClassPathResource封装配置文件  new ClassPathResource("applicationContext.xml")
@@ -26,6 +29,9 @@ public class XmlBeanFactoryTest {
 		System.out.println(user.getId()+":"+user.getName());
 	}
 
+	/**
+	 * xml自定义标签
+	 */
 	@Test
 	public void testCustom() {
 		ApplicationContext context = new ClassPathXmlApplicationContext("custom-tag.xml");
@@ -34,6 +40,9 @@ public class XmlBeanFactoryTest {
 
 	}
 
+	/**
+	 * FactoryBean的使用
+	 */
 	//ps:你是从FactoryBean源码看过来的吗,不是的话过去看看,有惊喜
 	@Test
 	public void testFactoryBean() {
