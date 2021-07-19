@@ -253,7 +253,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 		// Eagerly check singleton cache for manually registered singletons.
 		/*
-		 * 2.检查缓存中或者实例工厂中是否有对应的实例
+		 * 2.检查缓存中或者实例工厂中是否有对应的实例  TODO   这段代码要求熟练朗读并背诵
 		 * 为什么首先会有这段代码呢
 		 * 因为在创建单例bean的时候会存在依赖注入的情况,而在传创建依赖的时候为了避免循环依赖,
 		 * Spring创建bean的原则是不等bean创建完成就会将创建bean的ObjectFactory提前曝光
@@ -1846,7 +1846,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		// Now we have the bean instance, which may be a normal bean or a FactoryBean.
 		// If it's a FactoryBean, we use it to create a bean instance, unless the
 		// caller actually wants a reference to the factory.
-		//不是Factor有Bean,直接返回就行
+		//不是FactoryBean,直接返回就行
 		if (!(beanInstance instanceof FactoryBean)) {
 			return beanInstance;
 		}
@@ -1856,16 +1856,22 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			mbd.isFactoryBean = true;
 		}
 		else {
+			//尝试从缓存中加载bean
 			object = getCachedObjectForFactoryBean(beanName);
 		}
 		if (object == null) {
 			// Return bean instance from factory.
+			//这里你肯定是FactoryBean了,拿来吧你
 			FactoryBean<?> factory = (FactoryBean<?>) beanInstance;
 			// Caches object obtained from FactoryBean if it is a singleton.
+			//检测beanDefinitionMap中是否包含需要的bean
 			if (mbd == null && containsBeanDefinition(beanName)) {
+				//返回RootBeanDefinition,如果指定的bean是子bean的话同时合并父类相关属性
 				mbd = getMergedLocalBeanDefinition(beanName);
 			}
+			//判断bean是否是用户自定义的
 			boolean synthetic = (mbd != null && mbd.isSynthetic());
+			//从Factory中解析bean
 			object = getObjectFromFactoryBean(factory, beanName, !synthetic);
 		}
 		return object;
